@@ -1,43 +1,43 @@
 const express = require("express");
 const { randomBytes } = require("crypto");
-// const bodyParser = require("body-parser");
 const axios = require("axios");
 const cors = require("cors");
 const fs = require("fs");
+require("dotenv").config();
 // this next line looks for the index.js file in the db folder
 const db = require("./db");
-
-// Thumbnails should be size 400x225, which is a 16:9 aspect ratio.
-// They should also be in PNG format. Currently they are stored
-// for free on IMGUR.
+const morgan = require("morgan");
 
 // Creating express app object and setting some properties
 const app = express();
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-	console.log("hi");
+	console.log("hi. you hit the main endpoint");
 
-	// res.sendFile("/Users/andrewburns/Desktop/Bytrain/client/build/index.html");
 	res.status(200).send("HI. DID YOU MEAN TO CALL ME? I HAVE NOTHING FOR YOU.");
 });
 
 app.get("/videos", async (req, res) => {
 	const videoList = [];
-	res.send(videoList); ///////////////////////////////////////
 
-	// const getVideoList = async () => {
-	// 	const snapshot = await videoDetailsRef.get();
-
-	// 	snapshot.forEach((doc) => {
-	// 		videoList.push(doc.data());
-	// 	});
-	// };
-
-	// await getVideoList();
-
-	// res.status(200).send(videoList);
+	try {
+		const results = await db.query("SELECT * FROM videos");
+		res.status(200).json({
+			status: "Success",
+			results: results.rows.length,
+			data: {
+				videos: results.rows,
+			},
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
 });
 
 // This needs a READSTREAM to be sent from a server
@@ -49,13 +49,22 @@ app.get("/videos/:id", async (req, res) => {
 		res.status(400).send("Requires range header");
 	}
 
-	const getVideoPath = async () => {
-		const videoRef = videoDetailsRef.doc(req.params.id);
-		const doc = await videoRef.get();
-		return doc.data().path;
-	};
+	// Must be instantiated before the scope is limited
+	let videoPath = "";
 
-	const videoPath = await getVideoPath();
+	try {
+		const results = await db.query("SELECT * FROM videos WHERE videoid = $1", [
+			req.params.id,
+		]);
+		console.log("Query results in try-catch in id endpoint" + results);
+		videoPath = results.rows[0].path;
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
+
 	const videoSize = fs.statSync(videoPath).size;
 	const CHUNK_SIZE = 1024 * 1024; // 1mb
 	const start = Number(range.replace(/\D/g, ""));
@@ -85,14 +94,9 @@ app.listen(port, () => {
 	console.log(`Listening on ${port}...`);
 });
 
-// const getData = async () => {
-// 	const snapshot = await picsRef.get();
-// 	snapshot.forEach((doc) => {
-// 		console.log(doc.data());
-// 	});
-// };
-
-// getData();
+// Thumbnails should be size 400x225, which is a 16:9 aspect ratio.
+// They should also be in PNG format. Currently they are stored
+// for free on IMGUR.
 
 // Tools to grab random 4-byte strings
 // 65139b89

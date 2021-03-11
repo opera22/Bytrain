@@ -12,9 +12,9 @@ const VideoViewer = ({ video }) => {
 
 	return (
 		<div>
-			{/* <video key={video} width="650" controls>
+			<video key={video} width="650" controls>
 				<source src={baseVideoURL + video} type="video/mp4" />
-			</video> */}
+			</video>
 		</div>
 	);
 };

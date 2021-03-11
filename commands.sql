@@ -12,4 +12,4 @@ INSERT INTO comments (commentId, content, userId, dateposted) VALUES ('8d3b780a'
 
 INSERT INTO videos (videoId, title, description, path, thumbnail, userId, dateposted) VALUES ('94cf5d86', 'Invierno Porteño -  Astor Piazzolla (Piano Solo)', 'Credit goes to ATuttoPiano on YouTube.', './videos/inviernoporteno.mp4', 'https://i.imgur.com/1V76poG.png', '45fe9975', now());
 
-INSERT INTO videos (videoId, title, description, path, thumbnail, userId, dateposted) VALUES ('b2ce3ad3', 'A Walk Through the Louvre', 'Credit goes to the Explore France channel on YouTube.', './videos/walkthroughlouvre.mp4', 'hhttps://i.imgur.com/sHlxECV.png', '45fe9975', now());
+INSERT INTO videos (videoId, title, description, path, thumbnail, userId, dateposted) VALUES ('b2ce3ad3', 'A Walk Through the Louvre', 'Credit goes to the Explore France channel on YouTube.', './videos/walkthroughlouvre.mp4', 'https://i.imgur.com/sHlxECV.png', '45fe9975', now());

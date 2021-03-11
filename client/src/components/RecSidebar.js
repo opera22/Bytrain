@@ -8,12 +8,12 @@ const RecSidebar = ({ currentVideo, setVideo }) => {
 	useEffect(() => {
 		const getVideoList = async () => {
 			const response = await axios.get("http://localhost:4000/videos");
-			setVideoList(response.data);
+			setVideoList(response.data.data.videos);
 		};
 		getVideoList();
 	}, []);
 
-	if (!videoList) {
+	if (videoList.length === 0) {
 		return <div>Video List is empty...</div>;
 	}
 
@@ -21,20 +21,16 @@ const RecSidebar = ({ currentVideo, setVideo }) => {
 		return (
 			<div
 				className="video-list-item item"
-				key={video.id}
-				onClick={() => setVideo(video.id)}
+				key={video.videoid}
+				onClick={() => setVideo(video.videoid)}
 			>
-				<img
-					src={video.thumbnail}
-					alt={video.title}
-					className="image"
-				/>
+				<img src={video.thumbnail} alt={video.title} className="image" />
 				<div className="content">
 					<div className="header" id="videoItemHeader">
 						{video.title}
 					</div>
 					<div className="description" id="videoItemDescription">
-						{video.desc}
+						{video.description}
 					</div>
 				</div>
 			</div>
