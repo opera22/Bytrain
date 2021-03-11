@@ -1,0 +1,15 @@
+.video-list-item {
+	padding-bottom: 25%;
+}
+
+.video-list-item:hover {
+	cursor: pointer;
+}
+
+#videoItemHeader {
+	color: white;
+}
+
+#videoItemDescription {
+	color: rgb(185, 185, 185);
+}

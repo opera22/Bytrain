@@ -1,0 +1,24 @@
+.app {
+	background-color: rgb(49, 49, 49);
+	flex-wrap: wrap;
+	display: flex;
+	justify-content: center;
+	color: white;
+	padding: 10px;
+}
+
+.video-container {
+	flex: 5;
+	display: flex;
+	justify-content: center;
+}
+
+.rec-sidebar-container {
+	flex: 2;
+	display: flex;
+	justify-content: center;
+}
+
+.app {
+	min-height: 2000px;
+}
