@@ -1,19 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import VideoDetail from "./VideoDetail";
 
-const VideoViewer = ({ video }) => {
-	const baseVideoURL = "http://localhost:4000/videos/";
+const VideoViewer = ({ videoId, width, height }) => {
+	const baseVideoURL = "http://localhost:4000/videos/stream/";
+	useEffect(() => {}, []);
 
-	useEffect(() => {
-		console.log(video);
-		console.log("component was created or re-rendered");
-	}, [video]);
-
-	if (!video) return <div></div>;
+	if (!videoId) return <div></div>;
 
 	return (
-		<div>
-			<video key={video} width="650" controls>
-				<source src={baseVideoURL + video} type="video/mp4" />
+		<div className="video-viewer">
+			{/* <div className="ui segment">
+				<p></p>
+				<div className="ui active dimmer">
+					<div className="ui loader"></div>
+				</div>
+			</div> */}
+			<video
+				key={videoId}
+				width={width}
+				height={height}
+				style={{ backgroundColor: "black" }}
+				controls
+			>
+				<source src={baseVideoURL + videoId} type="video/mp4" />
 			</video>
 		</div>
 	);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./styles/RecSidebar.css";
 
-const RecSidebar = ({ currentVideo, setVideo }) => {
+const RecSidebar = ({ currentVideo, setVideoId }) => {
 	const [videoList, setVideoList] = useState([]);
 
 	useEffect(() => {
@@ -22,10 +22,10 @@ const RecSidebar = ({ currentVideo, setVideo }) => {
 			<div
 				className="video-list-item item"
 				key={video.videoid}
-				onClick={() => setVideo(video.videoid)}
+				onClick={() => setVideoId(video.videoid)}
 			>
 				<img src={video.thumbnail} alt={video.title} className="image" />
-				<div className="content">
+				<div className="content" id="content">
 					<div className="header" id="videoItemHeader">
 						{video.title}
 					</div>

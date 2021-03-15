@@ -20,6 +20,26 @@ app.get("/", (req, res) => {
 	res.status(200).send("HI. DID YOU MEAN TO CALL ME? I HAVE NOTHING FOR YOU.");
 });
 
+app.get("/users/:id", async (req, res) => {
+	try {
+		const results = await db.query("SELECT * FROM users WHERE userid = $1", [
+			req.params.id,
+		]);
+		res.status(200).json({
+			status: "Success",
+			results: results.rows.length,
+			data: {
+				users: results.rows,
+			},
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
+});
+
 app.get("/videos", async (req, res) => {
 	const videoList = [];
 
@@ -40,8 +60,31 @@ app.get("/videos", async (req, res) => {
 	}
 });
 
-// This needs a READSTREAM to be sent from a server
+// use a JOIN sql statement to get the user's username
+
 app.get("/videos/:id", async (req, res) => {
+	try {
+		const results = await db.query(
+			"SELECT * FROM videos INNER JOIN users ON videos.userid = users.userid WHERE videos.videoid = $1",
+			[req.params.id]
+		);
+		res.status(200).json({
+			status: "Success",
+			results: results.rows.length,
+			data: {
+				videos: results.rows,
+			},
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
+});
+
+// This needs a READSTREAM to be sent from a server
+app.get("/videos/stream/:id", async (req, res) => {
 	console.log(req.params);
 	const range = req.headers.range;
 	console.log(range);
@@ -56,7 +99,7 @@ app.get("/videos/:id", async (req, res) => {
 		const results = await db.query("SELECT * FROM videos WHERE videoid = $1", [
 			req.params.id,
 		]);
-		console.log("Query results in try-catch in id endpoint" + results);
+		console.log("Query results in try-catch in id endpoint" + results.rows[0]);
 		videoPath = results.rows[0].path;
 	} catch (err) {
 		console.log(err);

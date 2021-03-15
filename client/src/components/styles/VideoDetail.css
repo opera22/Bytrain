@@ -1,0 +1,39 @@
+#desc-dropdown {
+	/* color: "#b9b9b9"; */
+}
+
+#desc-dropdown-title {
+	/* color: #b9b9b9; */
+	color: #818181;
+	padding: 0 0 0 0;
+	margin: -2px 0 -5px 0;
+	display: flex;
+	justify-content: center;
+}
+
+#desc-dropdown-desc {
+	margin: 20px 0 0 0;
+}
+
+/* has to be more specific to beat out Semantic UI */
+#video-detail {
+	margin: 1px 0 15px 0;
+}
+
+.video-detail h2 {
+	margin: 1px;
+}
+
+/* .video-detail h3 {
+	margin: 1px;
+	font-size: 0.95em;
+} */
+
+.date-username {
+	/* font-size: 0.9em; */
+	/* margin-top: 20px; */
+	color: #818181;
+}
+
+.dropdown-text {
+}

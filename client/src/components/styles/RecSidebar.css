@@ -1,5 +1,7 @@
 .video-list-item {
 	padding-bottom: 25%;
+	min-width: 365px;
+	min-height: 108px;
 }
 
 .video-list-item:hover {
@@ -12,4 +14,8 @@
 
 #videoItemDescription {
 	color: rgb(185, 185, 185);
+}
+
+#content {
+	padding-top: 4px;
 }

@@ -1,0 +1,22 @@
+.navbar {
+	display: flex;
+	align-items: center;
+}
+
+#menu-button {
+	display: flex;
+	align-items: center;
+	height: 50px;
+	margin: 0 20px;
+}
+
+#menu-button:hover {
+	cursor: pointer;
+}
+
+.navbar h2 {
+	font-family: "Noto Serif", serif;
+	margin-top: 0;
+	margin-left: 20px;
+	font-size: 2em;
+}
