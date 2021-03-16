@@ -18,6 +18,7 @@ const App = () => {
 	// height should be 0.576 times the width
 	const [videoWidth, setVideoWidth] = useState("650");
 	const [videoHeight, setVideoHeight] = useState("375");
+	const [comments, setComments] = useState([]);
 	const [isSidebarVisible, setIsSidebarVisible] = useState("");
 	const [isDropdownActive, setIsDropdownActive] = useState(false);
 
@@ -35,11 +36,12 @@ const App = () => {
 		const response = await axios.get(
 			`http://localhost:4000/comments/${videoId}`
 		);
-		console.log(response);
+		setComments(response.data.data.comments);
 	};
 
 	useEffect(() => {
 		getVideo();
+		getComments();
 		setIsDropdownActive(false);
 	}, [videoId]);
 
@@ -99,7 +101,7 @@ const App = () => {
 						isActive={isDropdownActive}
 						setIsActive={setIsDropdownActive}
 					/>
-					<Comments />
+					<Comments comments={comments} />
 				</div>
 				<div className="rec-sidebar-container">
 					<RecSidebar currentVideoId={videoId} setVideoId={setVideoId} />
