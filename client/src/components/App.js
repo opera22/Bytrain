@@ -2,11 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import RecSidebar from "./RecSidebar";
 import VideoViewer from "./VideoViewer";
 import VideoDetail from "./VideoDetail";
-import Comments from "./Comments";
 import NavBar from "./NavBar";
 import axios from "axios";
 import "./styles/App.css";
-import { Transition } from "semantic-ui-react";
 
 const App = () => {
 	const [videoId, setVideoId] = useState("b2ce3ad3");
@@ -44,58 +42,51 @@ const App = () => {
 
 	return (
 		<div className="app">
-			<Transition
-				visible={isSidebarVisible === "" ? false : true}
-				animation="fade right"
-				duration={300}
-				style={{ position: "sticky" }}
+			<div
+				className={`ui sidebar inverted vertical menu ${isSidebarVisible}`}
+				id="main-sidebar"
 			>
-				<div
-					className={`ui sidebar inverted vertical menu ${isSidebarVisible}`}
-					id="main-sidebar"
-					style={{ left: "0", right: "auto" }}
-				>
-					<i
-						className="bars icon large"
-						id="menu-button"
-						onClick={handleMenuButtonClick}
-					/>
-					<a href="/" className="item">
-						1
-					</a>
-					<a href="/" className="item">
-						2
-					</a>
-					<a href="/" className="item">
-						3
-					</a>
-				</div>
-			</Transition>
-			<div className="navbar-container">
-				<NavBar handleMenuButtonClick={handleMenuButtonClick} />
+				<i
+					className="bars icon large"
+					id="menu-button"
+					onClick={handleMenuButtonClick}
+				/>
+				<a href="/" className="item">
+					1
+				</a>
+				<a href="/" className="item">
+					2
+				</a>
+				<a href="/" className="item">
+					3
+				</a>
 			</div>
-			<div className="main">
-				<div
-					className="video-container"
-					style={{ maxWidth: `${videoWidth}px` }}
-				>
-					<VideoViewer
-						videoId={videoId}
-						width={videoWidth}
-						height={videoHeight}
-					/>
-					<VideoDetail
-						videoTitle={videoTitle}
-						videoDescription={videoDescription}
-						username={videoUsername}
-						videoDate={videoDate}
-						isActive={isDropdownActive}
-						setIsActive={setIsDropdownActive}
-					/>
-					<Comments />
+			<div className="pusher">
+				<div className="navbar-container">
+					<NavBar handleMenuButtonClick={handleMenuButtonClick} />
 				</div>
-				<div className="rec-sidebar-container">
-					<RecSidebar currentVideoId={videoId} setVideoId={setVideoId} />
+				<div className="main">
+					<div
+						className="video-container"
+						style={{ maxWidth: `${videoWidth}px` }}
+					>
+						<VideoViewer
+							videoId={videoId}
+							width={videoWidth}
+							height={videoHeight}
+						/>
+						<VideoDetail
+							videoTitle={videoTitle}
+							videoDescription={videoDescription}
+							username={videoUsername}
+							videoDate={videoDate}
+							isActive={isDropdownActive}
+							setIsActive={setIsDropdownActive}
+						/>
+					</div>
+					<div className="rec-sidebar-container">
+						<RecSidebar currentVideoId={videoId} setVideoId={setVideoId} />
+					</div>
 				</div>
 			</div>
 		</div>
