@@ -6,9 +6,9 @@ CREATE TABLE videos (videoId VARCHAR(64) PRIMARY KEY NOT NULL, title TEXT NOT NU
 
 INSERT INTO videos (videoId, title, description, path, thumbnail, userId, dateposted) VALUES ('8dc8780a', 'AEUHHH', 'Tim Allen grunts. Credit goes to Marisa Kirisame on YouTube.', './videos/AEUHHH.mp4', 'https://i.imgur.com/Gvo9ocU.png', '45fe9975', now());
 
-CREATE TABLE comments (commentId VARCHAR(64) PRIMARY KEY NOT NULL, content TEXT NOT NULL, userId VARCHAR(64) NOT NULL, dateposted TIMESTAMPTZ NOT NULL, CONSTRAINT fk_user FOREIGN KEY(userId) REFERENCES users(userId));
+CREATE TABLE comments (commentId VARCHAR(64) PRIMARY KEY NOT NULL, content TEXT NOT NULL, userId VARCHAR(64) NOT NULL, videoId VARCHAR(64) NOT NULL, dateposted TIMESTAMPTZ NOT NULL, CONSTRAINT fk_user FOREIGN KEY(userId) REFERENCES users(userId), CONSTRAINT fk_video FOREIGN KEY(videoId) REFERENCES videos(videoId));
 
-INSERT INTO comments (commentId, content, userId, dateposted) VALUES ('8d3b780a', 'great video, thanks', '45fe9975', now());
+INSERT INTO comments (commentId, content, userId, videoId, dateposted) VALUES ('8d3b780a', 'great video, thanks', '45fe9975', '8dc8780a', now());
 
 INSERT INTO videos (videoId, title, description, path, thumbnail, userId, dateposted) VALUES ('94cf5d86', 'Invierno Porteño -  Astor Piazzolla (Piano Solo)', 'Credit goes to ATuttoPiano on YouTube.', './videos/inviernoporteno.mp4', 'https://i.imgur.com/1V76poG.png', '45fe9975', now());
 

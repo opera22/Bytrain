@@ -40,6 +40,27 @@ app.get("/users/:id", async (req, res) => {
 	}
 });
 
+app.get("/comments/:id", async (req, res) => {
+	try {
+		const results = await db.query(
+			"SELECT * FROM comments WHERE videoid = $1",
+			[req.params.id]
+		);
+		res.status(200).json({
+			status: "Success",
+			results: results.rows.length,
+			data: {
+				comments: results.rows,
+			},
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
+});
+
 app.get("/videos", async (req, res) => {
 	const videoList = [];
 

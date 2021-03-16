@@ -31,6 +31,13 @@ const App = () => {
 		setVideoDate(response.data.data.videos[0].dateposted);
 	};
 
+	const getComments = async () => {
+		const response = await axios.get(
+			`http://localhost:4000/comments/${videoId}`
+		);
+		console.log(response);
+	};
+
 	useEffect(() => {
 		getVideo();
 		setIsDropdownActive(false);
