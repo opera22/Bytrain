@@ -38,9 +38,14 @@ const App = () => {
 		setIsSidebarVisible(isSidebarVisible ? "" : "visible");
 	};
 
+	// 'rgba(0,0,0,0.5)'
+
 	return (
 		<div className="app">
-			<div className={`ui sidebar inverted vertical menu ${isSidebarVisible}`}>
+			<div
+				className={`ui sidebar inverted vertical menu ${isSidebarVisible}`}
+				id="main-sidebar"
+			>
 				<i
 					className="bars icon large"
 					id="menu-button"

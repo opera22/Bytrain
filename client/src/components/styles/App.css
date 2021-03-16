@@ -39,3 +39,7 @@
 #menu-button {
 	color: white;
 }
+
+#main-sidebar {
+	box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3);
+}
