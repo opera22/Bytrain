@@ -43,7 +43,7 @@ app.get("/users/:id", async (req, res) => {
 app.get("/comments/:id", async (req, res) => {
 	try {
 		const results = await db.query(
-			"SELECT * FROM comments WHERE videoid = $1",
+			"SELECT * FROM comments WHERE videoid = $1 ORDER BY dateposted DESC",
 			[req.params.id]
 		);
 		res.status(200).json({
