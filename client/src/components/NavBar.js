@@ -1,12 +1,7 @@
 import React from "react";
 import "./styles/NavBar.css";
 
-const NavBar = () => {
-	const handleMenuButtonClick = (e) => {
-		console.log("you hit the menu button");
-		console.log("you hit the menu button");
-	};
-
+const NavBar = ({ handleMenuButtonClick }) => {
 	return (
 		<div className="navbar">
 			<i

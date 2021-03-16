@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import RecSidebar from "./RecSidebar";
 import VideoViewer from "./VideoViewer";
 import VideoDetail from "./VideoDetail";
@@ -16,6 +16,7 @@ const App = () => {
 	// height should be 0.576 times the width
 	const [videoWidth, setVideoWidth] = useState("650");
 	const [videoHeight, setVideoHeight] = useState("375");
+	const [isSidebarVisible, setIsSidebarVisible] = useState("");
 	const [isDropdownActive, setIsDropdownActive] = useState(false);
 
 	const getVideo = async () => {
@@ -33,32 +34,54 @@ const App = () => {
 		setIsDropdownActive(false);
 	}, [videoId]);
 
+	const handleMenuButtonClick = (e) => {
+		setIsSidebarVisible(isSidebarVisible ? "" : "visible");
+	};
+
 	return (
 		<div className="app">
-			<div className="navbar-container">
-				<NavBar />
+			<div className={`ui sidebar inverted vertical menu ${isSidebarVisible}`}>
+				<i
+					className="bars icon large"
+					id="menu-button"
+					onClick={handleMenuButtonClick}
+				/>
+				<a href="/" className="item">
+					1
+				</a>
+				<a href="/" className="item">
+					2
+				</a>
+				<a href="/" className="item">
+					3
+				</a>
 			</div>
-			<div className="main">
-				<div
-					className="video-container"
-					style={{ maxWidth: `${videoWidth}px` }}
-				>
-					<VideoViewer
-						videoId={videoId}
-						width={videoWidth}
-						height={videoHeight}
-					/>
-					<VideoDetail
-						videoTitle={videoTitle}
-						videoDescription={videoDescription}
-						username={videoUsername}
-						videoDate={videoDate}
-						isActive={isDropdownActive}
-						setIsActive={setIsDropdownActive}
-					/>
+			<div className="pusher">
+				<div className="navbar-container">
+					<NavBar handleMenuButtonClick={handleMenuButtonClick} />
 				</div>
-				<div className="rec-sidebar-container">
-					<RecSidebar currentVideoId={videoId} setVideoId={setVideoId} />
+				<div className="main">
+					<div
+						className="video-container"
+						style={{ maxWidth: `${videoWidth}px` }}
+					>
+						<VideoViewer
+							videoId={videoId}
+							width={videoWidth}
+							height={videoHeight}
+						/>
+						<VideoDetail
+							videoTitle={videoTitle}
+							videoDescription={videoDescription}
+							username={videoUsername}
+							videoDate={videoDate}
+							isActive={isDropdownActive}
+							setIsActive={setIsDropdownActive}
+						/>
+					</div>
+					<div className="rec-sidebar-container">
+						<RecSidebar currentVideoId={videoId} setVideoId={setVideoId} />
+					</div>
 				</div>
 			</div>
 		</div>
