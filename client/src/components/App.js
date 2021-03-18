@@ -21,6 +21,7 @@ const App = () => {
 	const [comments, setComments] = useState([]);
 	const [isSidebarVisible, setIsSidebarVisible] = useState("");
 	const [isDropdownActive, setIsDropdownActive] = useState(false);
+	const [commentOptionsVisible, setCommentOptionsVisible] = useState("none");
 
 	const getVideo = async () => {
 		const response = await axios.get(`http://localhost:4000/videos/${videoId}`);
@@ -43,6 +44,7 @@ const App = () => {
 		getVideo();
 		getComments();
 		setIsDropdownActive(false);
+		setCommentOptionsVisible("none");
 	}, [videoId]);
 
 	const handleMenuButtonClick = (e) => {
@@ -101,7 +103,11 @@ const App = () => {
 						isActive={isDropdownActive}
 						setIsActive={setIsDropdownActive}
 					/>
-					<Comments comments={comments} />
+					<Comments
+						comments={comments}
+						optionsVisible={commentOptionsVisible}
+						setOptionsVisible={setCommentOptionsVisible}
+					/>
 				</div>
 				<div className="rec-sidebar-container">
 					<RecSidebar currentVideoId={videoId} setVideoId={setVideoId} />

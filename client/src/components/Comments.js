@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./styles/Comments.css";
 
-const Comments = ({ comments }) => {
-	const [optionsVisible, setOptionsVisible] = useState("none");
-
+const Comments = ({ comments, optionsVisible, setOptionsVisible }) => {
 	const months = {
 		"01": "January",
 		"02": "February",
@@ -41,6 +39,10 @@ const Comments = ({ comments }) => {
 
 	const handleCommentFocus = (e) => {
 		setOptionsVisible("");
+	};
+
+	const handleCommentCancel = (e) => {
+		setOptionsVisible("none");
 	};
 
 	const renderComments = () => {
@@ -97,7 +99,7 @@ const Comments = ({ comments }) => {
 				<div className="comment-input">
 					<form onSubmit={handleCommentSubmit}>
 						<div
-							class="ui input inverted transparent"
+							className="ui input inverted transparent"
 							style={{ color: "white", marginBottom: "10px" }}
 						>
 							<input
@@ -112,7 +114,15 @@ const Comments = ({ comments }) => {
 								className={`submit-options`}
 								style={{ display: optionsVisible }}
 							>
-								Cancel, Comment
+								<button
+									className="ui secondary button"
+									onClick={handleCommentCancel}
+								>
+									Cancel
+								</button>
+								<button className="ui transparent button" type="submit">
+									Comment
+								</button>
 							</div>
 						}
 					</form>
