@@ -67,7 +67,7 @@ app.post("/comments/:videoId", async (req, res) => {
 	try {
 		const results = await db.query(
 			"INSERT INTO comments (commentId, content, userId, videoId, dateposted) VALUES ($1, $2, $3, $4, now());",
-			[commentId, req.body.content, req.body.userid, req.params.videoId]
+			[commentId, req.body.content, req.body.userId, req.params.videoId]
 		);
 		res.status(200).json({
 			status: "Success",
