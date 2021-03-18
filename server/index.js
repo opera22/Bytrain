@@ -61,6 +61,29 @@ app.get("/comments/:id", async (req, res) => {
 	}
 });
 
+app.post("/comments/:videoId", async (req, res) => {
+	const commentId = randomBytes(4).toString("hex");
+	console.log(req.data);
+	try {
+		const results = await db.query(
+			"INSERT INTO comments (commentId, content, userId, videoId, dateposted) VALUES ($1, $2, $3, $4, now());",
+			[commentId, , , req.params.videoId]
+		);
+		res.status(200).json({
+			status: "Success",
+			results: results.rows.length,
+			data: {
+				comments: results.rows,
+			},
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
+});
+
 app.get("/videos", async (req, res) => {
 	const videoList = [];
 

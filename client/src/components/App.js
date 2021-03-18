@@ -22,6 +22,7 @@ const App = () => {
 	const [isSidebarVisible, setIsSidebarVisible] = useState("");
 	const [isDropdownActive, setIsDropdownActive] = useState(false);
 	const [commentOptionsVisible, setCommentOptionsVisible] = useState("none");
+	const [commentText, setCommentText] = useState("");
 
 	const getVideo = async () => {
 		const response = await axios.get(`http://localhost:4000/videos/${videoId}`);
@@ -40,18 +41,32 @@ const App = () => {
 		setComments(response.data.data.comments);
 	};
 
+	const handleMenuButtonClick = (e) => {
+		setIsSidebarVisible(isSidebarVisible ? "" : "visible");
+	};
+
+	const handleCommentSubmit = async () => {
+		console.log("You submitted a comment", commentText);
+		const response = await axios.post(
+			`http://localhost:4000/comments/${videoId}`
+			// {
+			// 	data: {
+			// 		content: commentText,
+			// 		userid: "45fe9975",
+			// 	},
+			// }
+		);
+		console.log(response);
+		getComments();
+	};
+
 	useEffect(() => {
 		getVideo();
 		getComments();
 		setIsDropdownActive(false);
 		setCommentOptionsVisible("none");
+		setCommentText("");
 	}, [videoId]);
-
-	const handleMenuButtonClick = (e) => {
-		setIsSidebarVisible(isSidebarVisible ? "" : "visible");
-	};
-
-	// 'rgba(0,0,0,0.5)'
 
 	return (
 		<div className="app">
@@ -107,6 +122,9 @@ const App = () => {
 						comments={comments}
 						optionsVisible={commentOptionsVisible}
 						setOptionsVisible={setCommentOptionsVisible}
+						commentText={commentText}
+						setCommentText={setCommentText}
+						handleCommentSubmit={handleCommentSubmit}
 					/>
 				</div>
 				<div className="rec-sidebar-container">

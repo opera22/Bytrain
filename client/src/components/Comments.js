@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import "./styles/Comments.css";
 
-const Comments = ({ comments, optionsVisible, setOptionsVisible }) => {
+const Comments = ({
+	comments,
+	optionsVisible,
+	setOptionsVisible,
+	commentText,
+	setCommentText,
+	handleCommentSubmit,
+}) => {
 	const months = {
 		"01": "January",
 		"02": "February",
@@ -32,17 +39,13 @@ const Comments = ({ comments, optionsVisible, setOptionsVisible }) => {
 		return newDate;
 	};
 
-	const handleCommentSubmit = (e) => {
-		e.preventDefault();
-		console.log("You submitted a comment");
-	};
-
 	const handleCommentFocus = (e) => {
 		setOptionsVisible("");
 	};
 
 	const handleCommentCancel = (e) => {
 		setOptionsVisible("none");
+		setCommentText("");
 	};
 
 	const renderComments = () => {
@@ -106,6 +109,8 @@ const Comments = ({ comments, optionsVisible, setOptionsVisible }) => {
 								type="text"
 								placeholder="Say something..."
 								onFocus={handleCommentFocus}
+								value={commentText}
+								onChange={(e) => setCommentText(e.target.value)}
 							/>
 						</div>
 						<hr />
@@ -115,6 +120,7 @@ const Comments = ({ comments, optionsVisible, setOptionsVisible }) => {
 								style={{ display: optionsVisible }}
 							>
 								<button
+									type="reset"
 									className="ui secondary button"
 									onClick={handleCommentCancel}
 								>
