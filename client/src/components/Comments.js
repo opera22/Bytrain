@@ -43,7 +43,7 @@ const Comments = ({ comments }) => {
 							{comment.username}
 						</a>
 						<div className="metadata" id="whitetext">
-							<span className="date" id="whitetext">
+							<span className="date" id="greytext">
 								{formattedDate}
 							</span>
 						</div>
@@ -65,7 +65,11 @@ const Comments = ({ comments }) => {
 				<h3 className="ui dividing header" id="whitetext">
 					Comments
 				</h3>
-				{renderedComments}
+				{comments.length === 0 ? (
+					<div className="no-comments">No comments yet!</div>
+				) : (
+					renderedComments
+				)}
 			</div>
 		</div>
 	);
