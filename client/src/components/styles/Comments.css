@@ -15,3 +15,9 @@
 .no-comments {
 	color: #818181;
 }
+
+.submit-options {
+	display: flex;
+	justify-content: end;
+	margin-bottom: 15px;
+}

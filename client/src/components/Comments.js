@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/Comments.css";
 
 const Comments = ({ comments }) => {
+	const [optionsVisible, setOptionsVisible] = useState("none");
+
 	const months = {
 		"01": "January",
 		"02": "February",
@@ -32,14 +34,41 @@ const Comments = ({ comments }) => {
 		return newDate;
 	};
 
+	const handleCommentSubmit = (e) => {
+		e.preventDefault();
+		console.log("You submitted a comment");
+	};
+
+	const handleCommentFocus = (e) => {
+		setOptionsVisible("");
+	};
+
 	const renderComments = () => {
 		return comments.map((comment) => {
 			const formattedDate = formatDate(comment.dateposted);
 
 			return (
 				<div className="comment" id="whitetext" key={comment.commentid}>
-					<div className="content" id="whitetext">
-						<a href="/" className="author" id="whitetext">
+					<a
+						className="avatar"
+						style={{
+							display: "flex",
+							justifyContent: "center",
+						}}
+					>
+						<i
+							className="train large icon"
+							style={{
+								position: "relative",
+								color: "white",
+								marginLeft: "-12px",
+								marginRight: "-5px",
+								marginTop: "5px",
+							}}
+						></i>
+					</a>
+					<div className="content" id="whitetext" style={{ marginLeft: "0" }}>
+						<a className="author" id="whitetext">
 							{comment.username}
 						</a>
 						<div className="metadata" id="whitetext">
@@ -65,11 +94,36 @@ const Comments = ({ comments }) => {
 				<h3 className="ui dividing header" id="whitetext">
 					Comments
 				</h3>
-				{comments.length === 0 ? (
-					<div className="no-comments">No comments yet!</div>
-				) : (
-					renderedComments
-				)}
+				<div className="comment-input">
+					<form onSubmit={handleCommentSubmit}>
+						<div
+							class="ui input inverted transparent"
+							style={{ color: "white", marginBottom: "10px" }}
+						>
+							<input
+								type="text"
+								placeholder="Say something..."
+								onFocus={handleCommentFocus}
+							/>
+						</div>
+						<hr />
+						{
+							<div
+								className={`submit-options`}
+								style={{ display: optionsVisible }}
+							>
+								Cancel, Comment
+							</div>
+						}
+					</form>
+				</div>
+				<div>
+					{comments.length === 0 ? (
+						<div className="no-comments">No comments yet!</div>
+					) : (
+						renderedComments
+					)}
+				</div>
 			</div>
 		</div>
 	);
