@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/Comments.css";
 
 const Comments = ({ comments }) => {
 	const months = {
@@ -31,21 +32,43 @@ const Comments = ({ comments }) => {
 		return newDate;
 	};
 
-	const renderedComments = () => {
+	const renderComments = () => {
 		return comments.map((comment) => {
 			const formattedDate = formatDate(comment.dateposted);
 
 			return (
-				<div>
-					<h2>{comment.username}</h2>
-					<div>{formattedDate}</div>
-					<div>{comment.content}</div>
+				<div className="comment" id="whitetext" key={comment.commentid}>
+					<div className="content" id="whitetext">
+						<a href="/" className="author" id="whitetext">
+							{comment.username}
+						</a>
+						<div className="metadata" id="whitetext">
+							<span className="date" id="whitetext">
+								{formattedDate}
+							</span>
+						</div>
+						<div className="text" id="whitetext">
+							{comment.content}
+						</div>
+					</div>
 				</div>
 			);
 		});
 	};
 
-	return <div>{renderedComments()}</div>;
+	const renderedComments = renderComments();
+
+	return (
+		<div className="comments-component" id="whitetext">
+			<div className="ui comments">
+				{" "}
+				<h3 className="ui dividing header" id="whitetext">
+					Comments
+				</h3>
+				{renderedComments}
+			</div>
+		</div>
+	);
 };
 
 export default Comments;
