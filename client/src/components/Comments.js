@@ -8,6 +8,7 @@ const Comments = ({
 	commentText,
 	setCommentText,
 	handleCommentSubmit,
+	handleCommentDelete,
 }) => {
 	const months = {
 		"01": "January",
@@ -40,7 +41,7 @@ const Comments = ({
 	};
 
 	const handleCommentFocus = (e) => {
-		setOptionsVisible("");
+		setOptionsVisible("flex");
 	};
 
 	const handleCommentCancel = (e) => {
@@ -81,6 +82,18 @@ const Comments = ({
 								{formattedDate}
 							</span>
 						</div>
+						<div
+							className="deleteButton"
+							style={{ float: "right", display: "inline" }}
+						>
+							<i
+								className="trash icon"
+								onClick={(e) => {
+									handleCommentDelete(comment.commentid);
+								}}
+								style={{ cursor: "pointer" }}
+							></i>
+						</div>
 						<div className="text" id="whitetext">
 							{comment.content}
 						</div>
@@ -116,8 +129,8 @@ const Comments = ({
 						<hr />
 						{
 							<div
-								className={`submit-options`}
-								style={{ display: optionsVisible }}
+								id="submit-options"
+								style={{ display: optionsVisible, justifyContent: "flex-end" }}
 							>
 								<button
 									type="reset"

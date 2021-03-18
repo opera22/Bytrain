@@ -84,6 +84,23 @@ app.post("/comments/:videoId", async (req, res) => {
 	}
 });
 
+app.delete("/comments/:commentId", async (req, res) => {
+	try {
+		const results = await db.query(
+			"DELETE FROM comments WHERE commentid = $1",
+			[req.params.commentId]
+		);
+		res.status(200).json({
+			status: "Successfully Deleted",
+		});
+	} catch (err) {
+		console.log(err);
+		res.status(500).json({
+			status: "There was an error. Try again later.",
+		});
+	}
+});
+
 app.get("/videos", async (req, res) => {
 	const videoList = [];
 

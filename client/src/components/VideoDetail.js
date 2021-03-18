@@ -48,8 +48,6 @@ const VideoDetail = ({
 
 	const formattedDate = videoDate ? formatDate(videoDate) : "";
 
-	if (videoDate) console.log(videoDate);
-
 	return (
 		<div className="video-detail ui inverted segment" id="video-detail">
 			<h2 className="video-title">{videoTitle}</h2>

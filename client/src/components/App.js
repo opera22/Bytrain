@@ -26,7 +26,6 @@ const App = () => {
 
 	const getVideo = async () => {
 		const response = await axios.get(`http://localhost:4000/videos/${videoId}`);
-		console.log(response);
 		setVideoTitle(response.data.data.videos[0].title);
 		setVideoDescription(response.data.data.videos[0].description);
 		setVideoUserId(response.data.data.videos[0].userid);
@@ -41,21 +40,33 @@ const App = () => {
 		setComments(response.data.data.comments);
 	};
 
+	const handleCommentDelete = async (commentId) => {
+		const response = await axios.delete(
+			`http://localhost:4000/comments/${commentId}`
+		);
+
+		getComments();
+	};
+
 	const handleMenuButtonClick = (e) => {
 		setIsSidebarVisible(isSidebarVisible ? "" : "visible");
 	};
 
 	const handleCommentSubmit = async (e) => {
 		e.preventDefault();
-		console.log("You submitted a comment", commentText);
 		const response = await axios.post(
 			`http://localhost:4000/comments/${videoId}`,
 			{
 				content: commentText,
-				userid: "45fe9975",
+				userId: "45fe9975",
 			}
 		);
-		console.log(response);
+		if (response.statusText === "OK") {
+			setCommentText("");
+			setCommentOptionsVisible("none");
+		} else {
+			alert("There was an error posting your comment. Please try again later.");
+		}
 		getComments();
 	};
 
@@ -86,13 +97,13 @@ const App = () => {
 						onClick={handleMenuButtonClick}
 					/>
 					<a href="/" className="item">
-						1
+						Account creation coming soon!
 					</a>
 					<a href="/" className="item">
-						2
+						...
 					</a>
 					<a href="/" className="item">
-						3
+						...
 					</a>
 				</div>
 			</Transition>
@@ -124,6 +135,7 @@ const App = () => {
 						commentText={commentText}
 						setCommentText={setCommentText}
 						handleCommentSubmit={handleCommentSubmit}
+						handleCommentDelete={handleCommentDelete}
 					/>
 				</div>
 				<div className="rec-sidebar-container">

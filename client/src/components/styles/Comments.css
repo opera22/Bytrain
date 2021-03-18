@@ -16,7 +16,7 @@
 	color: #818181;
 }
 
-.submit-options {
+#submit-options {
 	display: flex;
 	justify-content: end;
 	margin-bottom: 15px;
