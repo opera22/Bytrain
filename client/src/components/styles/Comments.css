@@ -1,0 +1,9 @@
+#whitetext {
+	color: white;
+	background: #1b1c1d;
+}
+
+.comments-component {
+	padding: 14px;
+	border-radius: 5px;
+}
