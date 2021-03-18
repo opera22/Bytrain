@@ -45,16 +45,15 @@ const App = () => {
 		setIsSidebarVisible(isSidebarVisible ? "" : "visible");
 	};
 
-	const handleCommentSubmit = async () => {
+	const handleCommentSubmit = async (e) => {
+		e.preventDefault();
 		console.log("You submitted a comment", commentText);
 		const response = await axios.post(
-			`http://localhost:4000/comments/${videoId}`
-			// {
-			// 	data: {
-			// 		content: commentText,
-			// 		userid: "45fe9975",
-			// 	},
-			// }
+			`http://localhost:4000/comments/${videoId}`,
+			{
+				content: commentText,
+				userid: "45fe9975",
+			}
 		);
 		console.log(response);
 		getComments();

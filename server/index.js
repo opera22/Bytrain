@@ -63,11 +63,11 @@ app.get("/comments/:id", async (req, res) => {
 
 app.post("/comments/:videoId", async (req, res) => {
 	const commentId = randomBytes(4).toString("hex");
-	console.log(req.data);
+
 	try {
 		const results = await db.query(
 			"INSERT INTO comments (commentId, content, userId, videoId, dateposted) VALUES ($1, $2, $3, $4, now());",
-			[commentId, , , req.params.videoId]
+			[commentId, req.body.content, req.body.userid, req.params.videoId]
 		);
 		res.status(200).json({
 			status: "Success",
