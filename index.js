@@ -196,7 +196,7 @@ app.get("/videos/:id", async (req, res) => {
 // 	videoStream.pipe(res);
 // });
 
-const port = process.env.SERVERPORT || 4000;
+const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
 	console.log(`Listening on ${port}...`);
