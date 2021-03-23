@@ -148,53 +148,53 @@ app.get("/videos/:id", async (req, res) => {
 	}
 });
 
-// This needs a READSTREAM to be sent from a server
-app.get("/videos/stream/:id", async (req, res) => {
-	console.log(req.params);
-	const range = req.headers.range;
-	console.log(range);
-	if (!range) {
-		res.status(400).send("Requires range header");
-	}
+// // This needs a READSTREAM to be sent from a server
+// app.get("/videos/stream/:id", async (req, res) => {
+// 	console.log(req.params);
+// 	const range = req.headers.range;
+// 	console.log(range);
+// 	if (!range) {
+// 		res.status(400).send("Requires range header");
+// 	}
 
-	// Must be instantiated before the scope is limited
-	let videoPath = "";
+// 	// Must be instantiated before the scope is limited
+// 	let videoPath = "";
 
-	try {
-		const results = await db.query("SELECT * FROM videos WHERE videoid = $1", [
-			req.params.id,
-		]);
-		console.log("Query results in try-catch in id endpoint" + results.rows[0]);
-		videoPath = results.rows[0].path;
-	} catch (err) {
-		console.log(err);
-		res.status(500).json({
-			status: "There was an error. Try again later.",
-		});
-	}
+// 	try {
+// 		const results = await db.query("SELECT * FROM videos WHERE videoid = $1", [
+// 			req.params.id,
+// 		]);
+// 		console.log("Query results in try-catch in id endpoint" + results.rows[0]);
+// 		videoPath = results.rows[0].path;
+// 	} catch (err) {
+// 		console.log(err);
+// 		res.status(500).json({
+// 			status: "There was an error. Try again later.",
+// 		});
+// 	}
 
-	const videoSize = fs.statSync(videoPath).size;
-	const CHUNK_SIZE = 1024 * 1024; // 1mb
-	const start = Number(range.replace(/\D/g, ""));
-	const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
-	const contentLength = end - start + 1;
+// 	const videoSize = fs.statSync(videoPath).size;
+// 	const CHUNK_SIZE = 1024 * 1024; // 1mb
+// 	const start = Number(range.replace(/\D/g, ""));
+// 	const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+// 	const contentLength = end - start + 1;
 
-	const videoStream = fs.createReadStream(videoPath, {
-		start,
-		end,
-		autoClose: true,
-	});
+// 	const videoStream = fs.createReadStream(videoPath, {
+// 		start,
+// 		end,
+// 		autoClose: true,
+// 	});
 
-	const headers = {
-		"Content-Range": `bytes ${start} - ${end} / ${videoSize}`,
-		"Accept-Ranges": "bytes",
-		"Content-Length": contentLength,
-		"Content-Type": "video/mp4",
-	};
+// 	const headers = {
+// 		"Content-Range": `bytes ${start} - ${end} / ${videoSize}`,
+// 		"Accept-Ranges": "bytes",
+// 		"Content-Length": contentLength,
+// 		"Content-Type": "video/mp4",
+// 	};
 
-	res.writeHead(206, headers);
-	videoStream.pipe(res);
-});
+// 	res.writeHead(206, headers);
+// 	videoStream.pipe(res);
+// });
 
 const port = process.env.SERVERPORT;
 
