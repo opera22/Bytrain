@@ -7,6 +7,7 @@ require("dotenv").config();
 // this next line looks for the index.js file in the db folder
 const db = require("./db");
 const morgan = require("morgan");
+const path = require("path");
 
 // Creating express app object and setting some properties
 const app = express();
@@ -14,10 +15,13 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-	console.log("hi. you hit the main endpoint");
+app.use(express.static("../client/build"));
 
-	res.status(200).send("HI. DID YOU MEAN TO CALL ME? I HAVE NOTHING FOR YOU.");
+app.get("/", (req, res) => {
+	console.log("You hit the main endpoint.");
+
+	res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+	// res.status(200).send(__dirname + "/../client/build/index.html");
 });
 
 app.get("/users/:id", async (req, res) => {
