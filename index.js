@@ -20,7 +20,7 @@ app.use(express.static("../client/build"));
 app.get("/", (req, res) => {
 	console.log("You hit the main endpoint.");
 
-	res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+	res.sendFile(path.join(__dirname + "/client/build/index.html"));
 	// res.status(200).send(__dirname + "/../client/build/index.html");
 });
 
