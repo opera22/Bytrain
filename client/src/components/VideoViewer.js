@@ -8,14 +8,23 @@ const VideoViewer = ({ videoId, width, height }) => {
 	if (!videoId) return <div></div>;
 
 	return (
-		<div className="video-viewer">
+		<div
+			className="video-viewer"
+			style={{
+				minWidth: width,
+				minHeight: height,
+				border: "1px solid red",
+				flexBasis: "auto",
+				flex: "0 0 auto",
+			}}
+		>
 			{/* <div className="ui segment">
 				<p></p>
 				<div className="ui active dimmer">
 					<div className="ui loader"></div>
 				</div>
 			</div> */}
-			<video
+			{/* <video
 				key={videoId}
 				width={width}
 				height={height}
@@ -23,7 +32,13 @@ const VideoViewer = ({ videoId, width, height }) => {
 				controls
 			>
 				<source src={baseVideoURL + videoId} type="video/mp4" />
-			</video>
+			</video> */}
+			<h3>
+				You are viewing a version without streaming functionality. This is to
+				keep the bandwidth down. :)
+				<br></br>.<br></br>.<br></br>.<br></br>.<br></br>.<br></br>.<br></br>.
+				<br></br>.<br></br>.<br></br>.<br></br>.<br></br>.
+			</h3>
 		</div>
 	);
 };
