@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors());
 
-app.use(express.static("../client/build"));
+app.use(express.static("/client/build"));
 
 app.get("/", (req, res) => {
 	console.log("You hit the main endpoint.");
