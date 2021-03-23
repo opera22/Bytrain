@@ -4,10 +4,17 @@ const axios = require("axios");
 const cors = require("cors");
 const fs = require("fs");
 require("dotenv").config();
-// this next line looks for the index.js file in the db folder
-const db = require("./db");
 const morgan = require("morgan");
 const path = require("path");
+const { Pool } = require("pg");
+const pool = new Pool({
+	connectionString: process.env.DATABASE_URL,
+	ssl: {
+		rejectUnauthorized: false,
+	},
+});
+
+const dbQuery = (text, params) => pool.query(text, params);
 
 // Creating express app object and setting some properties
 const app = express();
@@ -26,7 +33,7 @@ app.get("/", (req, res) => {
 
 app.get("/users/:id", async (req, res) => {
 	try {
-		const results = await db.query("SELECT * FROM users WHERE userid = $1", [
+		const results = await dbQuery("SELECT * FROM users WHERE userid = $1", [
 			req.params.id,
 		]);
 		res.status(200).json({
@@ -46,7 +53,7 @@ app.get("/users/:id", async (req, res) => {
 
 app.get("/comments/:id", async (req, res) => {
 	try {
-		const results = await db.query(
+		const results = await dbQuery(
 			"SELECT * FROM comments INNER JOIN users ON comments.userid = users.userid WHERE videoid = $1 ORDER BY dateposted DESC",
 			[req.params.id]
 		);
@@ -69,7 +76,7 @@ app.post("/comments/:videoId", async (req, res) => {
 	const commentId = randomBytes(4).toString("hex");
 
 	try {
-		const results = await db.query(
+		const results = await dbQuery(
 			"INSERT INTO comments (commentId, content, userId, videoId, dateposted) VALUES ($1, $2, $3, $4, now());",
 			[commentId, req.body.content, req.body.userId, req.params.videoId]
 		);
@@ -90,10 +97,9 @@ app.post("/comments/:videoId", async (req, res) => {
 
 app.delete("/comments/:commentId", async (req, res) => {
 	try {
-		const results = await db.query(
-			"DELETE FROM comments WHERE commentid = $1",
-			[req.params.commentId]
-		);
+		const results = await dbQuery("DELETE FROM comments WHERE commentid = $1", [
+			req.params.commentId,
+		]);
 		res.status(200).json({
 			status: "Successfully Deleted",
 		});
@@ -109,7 +115,7 @@ app.get("/videos", async (req, res) => {
 	const videoList = [];
 
 	try {
-		const results = await db.query("SELECT * FROM videos");
+		const results = await dbQuery("SELECT * FROM videos");
 		res.status(200).json({
 			status: "Success",
 			results: results.rows.length,
@@ -129,7 +135,7 @@ app.get("/videos", async (req, res) => {
 
 app.get("/videos/:id", async (req, res) => {
 	try {
-		const results = await db.query(
+		const results = await dbQuery(
 			"SELECT * FROM videos INNER JOIN users ON videos.userid = users.userid WHERE videos.videoid = $1",
 			[req.params.id]
 		);
@@ -161,7 +167,7 @@ app.get("/videos/:id", async (req, res) => {
 // 	let videoPath = "";
 
 // 	try {
-// 		const results = await db.query("SELECT * FROM videos WHERE videoid = $1", [
+// 		const results = await dbQuery("SELECT * FROM videos WHERE videoid = $1", [
 // 			req.params.id,
 // 		]);
 // 		console.log("Query results in try-catch in id endpoint" + results.rows[0]);
