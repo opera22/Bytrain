@@ -7,7 +7,7 @@ const RecSidebar = ({ currentVideo, setVideoId }) => {
 
 	useEffect(() => {
 		const getVideoList = async () => {
-			const response = await axios.get("http://localhost:4000/videos");
+			const response = await axios.get("https://bytrain.herokuapp.com/videos");
 			setVideoList(response.data.data.videos);
 		};
 		getVideoList();

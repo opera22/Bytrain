@@ -25,7 +25,9 @@ const App = () => {
 	const [commentText, setCommentText] = useState("");
 
 	const getVideo = async () => {
-		const response = await axios.get(`http://localhost:4000/videos/${videoId}`);
+		const response = await axios.get(
+			`https://bytrain.herokuapp.com/videos/${videoId}`
+		);
 		setVideoTitle(response.data.data.videos[0].title);
 		setVideoDescription(response.data.data.videos[0].description);
 		setVideoUserId(response.data.data.videos[0].userid);
@@ -35,14 +37,14 @@ const App = () => {
 
 	const getComments = async () => {
 		const response = await axios.get(
-			`http://localhost:4000/comments/${videoId}`
+			`https://bytrain.herokuapp.com/comments/${videoId}`
 		);
 		setComments(response.data.data.comments);
 	};
 
 	const handleCommentDelete = async (commentId) => {
 		const response = await axios.delete(
-			`http://localhost:4000/comments/${commentId}`
+			`https://bytrain.herokuapp.com/comments/${commentId}`
 		);
 
 		getComments();
@@ -55,7 +57,7 @@ const App = () => {
 	const handleCommentSubmit = async (e) => {
 		e.preventDefault();
 		const response = await axios.post(
-			`http://localhost:4000/comments/${videoId}`,
+			`https://bytrain.herokuapp.com/comments/${videoId}`,
 			{
 				content: commentText,
 				userId: "45fe9975",

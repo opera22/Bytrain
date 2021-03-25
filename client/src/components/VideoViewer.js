@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import VideoDetail from "./VideoDetail";
 
 const VideoViewer = ({ videoId, width, height }) => {
-	const baseVideoURL = "http://localhost:4000/videos/stream/";
+	const baseVideoURL = "https://bytrain.herokuapp.com/videos/stream/";
 	useEffect(() => {}, []);
 
 	if (!videoId) return <div></div>;
