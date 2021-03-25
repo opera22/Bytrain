@@ -14,6 +14,12 @@ const pool = new Pool({
 	},
 });
 
+console.log(process.env.DATABASE_URL);
+console.log(process.env.DATABASE_URL);
+console.log(process.env.DATABASE_URL);
+console.log(process.env.DATABASE_URL);
+console.log(process.env.DATABASE_URL);
+
 // const pool.query = (text, params) => pool.query(text, params);
 
 // Creating express app object and setting some properties
